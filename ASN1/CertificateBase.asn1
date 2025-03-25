@@ -1,0 +1,44 @@
+CertificateBase DEFINITIONS  ::= BEGIN
+
+
+Uint8 ::= INTEGER (0..255)
+Uint32 ::= INTEGER (0..4294967295)
+Uint16 ::= INTEGER (0..65535)
+Time32 ::= Uint32
+
+
+CertificateBase ::= SEQUENCE {
+  version Uint8,
+  tobeSignedData ToBeSignedCertificate,
+  signature Signature
+}
+
+ToBeSignedCertificate ::= SEQUENCE {
+  id OCTET STRING (SIZE(32)),
+  validity Validity,
+  anonymousPK OCTET STRING  (SIZE(128))
+}
+
+Validity::= SEQUENCE {
+  end Time32
+}
+
+
+Signature ::= CHOICE {
+  ecdsaNistP256Signature  EcdsaP256Signature 
+  
+}
+
+EcdsaP256Signature ::= SEQUENCE {
+  rSig EccP256CurvePoint,
+  sSig OCTET STRING (SIZE (32))
+}
+
+EccP256CurvePoint::= SEQUENCE {
+  x OCTET STRING (SIZE (32))
+}
+
+
+
+END
+

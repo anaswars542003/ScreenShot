@@ -1,0 +1,22 @@
+SendData DEFINITIONS  ::= BEGIN 
+
+Uint8 ::= INTEGER (0..255)
+
+SendData ::= SEQUENCE {
+    protocolVersion  Uint8,
+    content          Content
+}
+
+Content ::=  CHOICE { 
+    signedData                SignedData,
+    signedCertificateRequest  OCTET STRING (SIZE(32))
+  }
+
+SignedData ::= SEQUENCE { 
+    data      OCTET STRING (SIZE(120)),      -- The actual signed data
+    signer    OCTET STRING (SIZE(32)),  -- Signer’s identifier (32 bytes)
+    signature OCTET STRING (SIZE(65))   -- Digital signature (96 bytes)
+}
+
+
+END
